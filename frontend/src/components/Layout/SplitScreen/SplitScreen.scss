@@ -1,0 +1,30 @@
+// SplitScreen.scss
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+  
+    @media (max-width: 768px) {
+      flex-direction: column; // Stack panels vertically on smaller screens
+    }
+  }
+  
+  .left-panel {
+    flex: 0.3; // 30% width for larger screens
+    background-color: #f0f0f0;
+  
+    @media (max-width: 768px) {
+      flex: 1; // Full width for smaller screens
+    }
+  }
+  
+  .right-panel {
+    flex: 0.7; // 70% width for larger screens
+    background-color: #ffffff;
+  
+    @media (max-width: 768px) {
+      flex: 1; // Full width for smaller screens
+    }
+  }
+  
