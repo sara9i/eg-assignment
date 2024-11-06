@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoginForm from '../../../components/Authentication/LoginForm';
 import { Card } from 'antd';
 import Image from '../../../components/Image';
 import { sideImageData } from '../constants';
@@ -18,7 +19,7 @@ const RightSide = () => (
       bordered={false}
       className="w-full max-w-sm p-6 bg-white rounded-lg shadow-lg md:max-w-md lg:max-w-lg"
     >
-      {/* add login form component */}
+      <LoginForm />
       <div className="mt-6 text-sm text-center text-gray-500 font-poppins">
         <span>Not a member? </span>
         <Link to="/sign-up" className="text-blue-500 underline">
