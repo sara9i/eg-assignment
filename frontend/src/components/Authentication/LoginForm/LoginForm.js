@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, Row } from 'antd';
+import { Button, Form, Input } from 'antd';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { loginFormSchema } from '../../../pages/Auth/constants';
@@ -37,7 +37,7 @@ const LoginForm = () => {
       initialValues={{ remember: true }}
       onFinish={login}
       layout="vertical"
-      className="space-y-4"
+      className="max-w-md p-8 mx-auto space-y-4 bg-white rounded-lg shadow-lg"
     >
       <Form.Item
         label="Email"
@@ -85,6 +85,5 @@ const LoginForm = () => {
     </Form>
   );
 };
-
 
 export default connect()(LoginForm);

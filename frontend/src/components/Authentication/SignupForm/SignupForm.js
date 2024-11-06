@@ -3,7 +3,6 @@ import { Button, Form, Input, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 
-const className = 'c-AuthForm';
 
 function SignupForm({ dispatch }) {
   const [form] = Form.useForm();
@@ -13,89 +12,98 @@ function SignupForm({ dispatch }) {
   };
 
   return (
-    <div className={`${className}__form__wrapper`}>
-      <Form
-        form={form}
-        name="Login"
-        initialValues={{ remember: true }}
-        onFinish={signUp}
+    <Form
+      form={form}
+      name="Signup"
+      initialValues={{ remember: true }}
+      onFinish={signUp}
+      layout="vertical"
+      className="max-w-md p-8 mx-auto space-y-4 bg-white rounded-lg shadow-lg"
+    >
+      <Form.Item
+        label="Name"
+        name="name"
+        rules={[{ required: true, message: 'Please input your name!' }]}
       >
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: 'Please input your name!' }]}
-        >
-          <Input placeholder="Name" className={`${className}__email__input`} />
-        </Form.Item>
+        <Input
+          placeholder="Name"
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+        />
+      </Form.Item>
 
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            { required: true, message: 'Please input your email!' },
-            { type: 'email', message: 'Please enter a valid email' },
-          ]}
-        >
-          <Input placeholder="Email" className={`${className}__email__input`} />
-        </Form.Item>
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[
+          { required: true, message: 'Please input your email!' },
+          { type: 'email', message: 'Please enter a valid email' },
+        ]}
+      >
+        <Input
+          placeholder="Email"
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+        />
+      </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            { required: true, message: 'Please input your password!' },
-            {
-              type: 'string',
-              pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-              message:
-                'Password should be at least 8 characters with at least one letter, one number and one special character',
-            },
-          ]}
-        >
-          <Input.Password
-            placeholder="Password"
-            className={`${className}__password__input`}
-          />
-        </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          { required: true, message: 'Please input your password!' },
+          {
+            type: 'string',
+            pattern:
+              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            message:
+              'Password should be at least 8 characters with at least one letter, one number, and one special character',
+          },
+        ]}
+      >
+        <Input.Password
+          placeholder="Password"
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+        />
+      </Form.Item>
 
-        <Form.Item
-          label="Confirm Password"
-          name="cpassword"
-          rules={[
-            { required: true, message: 'Please confirm your password!' },
-            {
-              type: 'string',
-              pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-              message:
-                'Password should be at least 8 characters with at least one letter, one number and one special character',
-            },
-          ]}
-        >
-          <Input.Password
-            placeholder="Confirm Password"
-            className={`${className}__password__input`}
-          />
-        </Form.Item>
+      <Form.Item
+        label="Confirm Password"
+        name="cpassword"
+        rules={[
+          { required: true, message: 'Please confirm your password!' },
+          {
+            type: 'string',
+            pattern:
+              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            message:
+              'Password should be at least 8 characters with at least one letter, one number, and one special character',
+          },
+        ]}
+      >
+        <Input.Password
+          placeholder="Confirm Password"
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+        />
+      </Form.Item>
 
-        <Row justify="center">
-          <Form.Item shouldUpdate={true}>
-            {() => (
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={
-                  !form.isFieldsTouched(true) ||
-                  form.getFieldsError().filter(({ errors }) => errors.length)
-                    .length
-                }
-              >
-                Sign Up
-              </Button>
-            )}
-          </Form.Item>
-        </Row>
-      </Form>
-    </div>
+      <Row justify="center">
+        <Form.Item shouldUpdate={true}>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
+              className="w-full p-3 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+            >
+              Sign Up
+            </Button>
+          )}
+        </Form.Item>
+      </Row>
+    </Form>
   );
 }
 
