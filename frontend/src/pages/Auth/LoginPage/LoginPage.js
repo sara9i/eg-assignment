@@ -33,7 +33,7 @@ const RightSide = () => (
 const LoginPage = () => {
   return (
     <div className="relative">
-      <SplitScreen leftWidth={3} rightWidth={7}>
+      <SplitScreen>
         <LeftSide />
         <RightSide />
       </SplitScreen>

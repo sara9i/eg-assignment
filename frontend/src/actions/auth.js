@@ -123,7 +123,6 @@ export const startLoginCheck = (token, currentRoute, email = '', navigate) => {
       }
     } else {
       dispatch(setLoginFailed(true));
-
       const emailParam = email ? `?email=${encodeURIComponent(email)}` : '';
       navigate(`/login${emailParam}`);
     }

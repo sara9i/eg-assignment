@@ -2,13 +2,24 @@
 import { Button, Form, Input, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
+import { startSignUp } from '../../../actions/auth';
 
 function SignupForm({ dispatch }) {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const signUp = (values) => {
-    //signup backend request logic
+    dispatch(
+      startSignUp(
+        values?.name,
+        values?.email,
+        values?.password,
+        values?.cpassword,
+        values?.token,
+        navigate
+      )
+    );
   };
 
   return (

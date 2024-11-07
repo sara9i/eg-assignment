@@ -1,13 +1,28 @@
 /* eslint-disable no-unused-vars */
 import { Button, Form, Input } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
+import queryString from 'query-string'; // Import query-string to parse URL params
+import { startLogin } from '../../../actions/auth';
 import { loginFormSchema } from '../../../pages/Auth/constants';
 import { validate } from '../../../utilities/validationHelper';
 
-const LoginForm = () => {
+const LoginForm = ({ dispatch }) => {
   const [form] = Form.useForm();
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Parse email from URL query parameters
+  const { email: emailFromUrl } = queryString.parse(location.search);
+
+  useEffect(() => {
+    // Set the initial value for email field if email param is found
+    if (emailFromUrl) {
+      form.setFieldsValue({ email: emailFromUrl });
+    }
+  }, [emailFromUrl, form]);
 
   const login = async (values) => {
     const formData = { email: values?.email, password: values?.password };
@@ -23,11 +38,7 @@ const LoginForm = () => {
 
     const email = formData.email;
     const password = formData.password;
-    console.log("email: ", email);
-    console.log("password: ", password);
-    console.log("login form errors: ", errors);
-    
-    //login request logic
+    dispatch(startLogin(email, password, navigate));
   };
 
   return (

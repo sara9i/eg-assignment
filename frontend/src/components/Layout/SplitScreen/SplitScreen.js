@@ -1,5 +1,5 @@
 import React from 'react';
-import './SplitScreen.scss'; // Import the SCSS file
+import './SplitScreen.scss';
 
 const SplitScreen = ({ children }) => {
   const [left, right] = children;
