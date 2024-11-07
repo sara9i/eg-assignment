@@ -8,8 +8,6 @@ import HomeContainer from './pages/HomeContainer';
 import store from './stores/configureStore';
 import Auth from './modules/auth';
 
-const AuthWrapper = lazy(() => import('./components/AuthWrapper/index'));
-
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,9 +32,7 @@ function App() {
             <Route
               path="/login"
               element={
-                <AuthWrapper>
-                  <LoginPage />
-                </AuthWrapper>
+                <LoginPage />
               }
             />
             <Route path="/sign-up" element={<SignupPage />} />
