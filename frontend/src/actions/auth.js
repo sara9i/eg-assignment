@@ -1,5 +1,4 @@
 import apiClient from '../services/helper/apiService';
-import keys from '../config/keys';
 import Auth from '../modules/auth';
 
 import { setLoading, setLoginFailed } from './main';
