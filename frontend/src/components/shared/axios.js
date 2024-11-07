@@ -1,7 +1,6 @@
-import axios from 'axios';
+import privateAxiosInstance from '../../services/helper/apiService'
 import AuthStore, { getRefreshToken } from '../../stores/authStore';
 
-const privateAxiosInstance = axios.create({});
 
 privateAxiosInstance.interceptors.request.use((config) => {
   try {
@@ -37,7 +36,7 @@ privateAxiosInstance.interceptors.response.use(
 const refreshAccessToken = async () => {
   try {
     let refreshToken = getRefreshToken(AuthStore.getState());
-    let response = await axios.post(
+    let response = await privateAxiosInstance.post(
       `${process.env.REACT_APP_BACKEND_URL}/auth/refreshToken`,
       {
         refreshToken

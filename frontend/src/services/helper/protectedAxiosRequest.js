@@ -1,12 +1,6 @@
-import axios from 'axios';
+import protectedAxiosRequest from './apiService'
 import { getTokensService } from '../../actions/auth';
-import keys from '../../config/keys';
 import Auth from '../../modules/auth';
-const { baseURL } = keys;
-
-const protectedAxiosRequest = axios.create({
-  baseURL
-});
 
 const protectedReqConfigMiddleware = (request) => {
   return setAuthHeadersMiddleware(request);

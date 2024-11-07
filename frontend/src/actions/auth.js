@@ -1,11 +1,9 @@
-import axios from 'axios';
+import apiClient from '../services/helper/apiService';
 import keys from '../config/keys';
 import Auth from '../modules/auth';
 
 import { setLoading, setLoginFailed } from './main';
 import { setUser } from './user';
-
-const { baseURL } = keys;
 
 export const login = (id, user) => ({
   type: 'LOGIN',
@@ -46,8 +44,8 @@ export const startSignUp = (
         dispatch(setLoading(false));
         dispatch(setLoginFailed('Please choose a stronger password. Password has to contain at least 1 uppercase alphabetical character, 1 lowercase alphabetical character, 1 numeric character and eight characters or longer'));
       } else {
-        axios
-          .post(`${baseURL}/auth/signup`, dt, { withCredentials: true })
+        apiClient
+          .post('auth/signup', dt, { withCredentials: true })
           .then((response) => {
             const { token, refreshToken, user } = response.data;
 
@@ -81,13 +79,13 @@ const _postLoginProcess = (userData, token, refreshToken, dispatch) => {
   dispatch(setUser(userData));
 };
 
-export const startLogin = (email, password, currentRoute, navigate) => {
+export const startLogin = (email, password, navigate) => {
   return (dispatch) => {
     const dt = { email, password };
     dispatch(setLoading(true));
 
-    axios
-      .post(`${baseURL}/auth/login`, dt, { withCredentials: true })
+    apiClient
+      .post('auth/login', dt, { withCredentials: true })
       .then((response) => {
         const { token, refreshToken, user } = response.data;
 
@@ -95,12 +93,7 @@ export const startLogin = (email, password, currentRoute, navigate) => {
           dispatch(setLoginFailed(false));
           dispatch(login(user._id, user));
           dispatch(setLoading(false));
-
-          if (!currentRoute || currentRoute.includes('/login')) {
-            navigate('/');
-          } else {
-            navigate(currentRoute);
-          }
+          navigate('/');
         });
       })
       .catch((err) => {
@@ -110,13 +103,16 @@ export const startLogin = (email, password, currentRoute, navigate) => {
   };
 };
 
-export const startLoginCheck = (token, currentRoute, email = '', navigate) => {
+export const startLoginCheck = (token, refreshToken, currentRoute, email = '', navigate) => {
   return (dispatch) => {
+    console.log("in login check. token: ", token);
+    console.log("currentRoute: ", currentRoute);
     if (token) {
       dispatch(setLoginFailed(false));
       dispatch(setLoading(false));
 
       if (currentRoute === '/login') {
+        Auth.setTokens(token, refreshToken);
         navigate('/');
       } else {
         navigate(currentRoute || '/');
