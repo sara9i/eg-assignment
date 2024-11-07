@@ -67,6 +67,9 @@ export const startSignUp = (
           });
       }
     } else {
+      if(password !== confirmPassword){
+        setErrors("Password and confirm pasword don't match");
+      }
       dispatch(setLoginFailed('Invalid password'));
       dispatch(setLoading(false));
     }
