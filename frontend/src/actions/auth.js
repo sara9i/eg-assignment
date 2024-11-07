@@ -32,6 +32,7 @@ export const startSignUp = (
   password,
   confirmPassword,
   token,
+  setErrors,
   navigate
 ) => {
   return (dispatch) => {
@@ -59,7 +60,9 @@ export const startSignUp = (
             navigate('/');
           })
           .catch((err) => {
-            console.log(err);
+            if(err.code === "ERR_BAD_REQUEST"){
+              setErrors(err?.response?.data?.message);
+            }
             dispatch(setLoading(false));
           });
       }
@@ -78,7 +81,7 @@ const _postLoginProcess = (userData, token, refreshToken, dispatch) => {
   dispatch(setUser(userData));
 };
 
-export const startLogin = (email, password, navigate) => {
+export const startLogin = (email, password, setApiErrors, navigate) => {
   return (dispatch) => {
     const dt = { email, password };
     dispatch(setLoading(true));
@@ -96,7 +99,9 @@ export const startLogin = (email, password, navigate) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        if(err.code === "ERR_BAD_REQUEST"){
+          setApiErrors(err?.response?.data?.message);
+        }
         dispatch(setLoading(false));
       });
   };

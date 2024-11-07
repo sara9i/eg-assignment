@@ -11,8 +11,11 @@ const apiClient = axios.create({
 apiClient.interceptors.response.use(
   response => response,
   error => {
+    //exlude bad errors and authentiation error
+    if(error.status <= 400 && error.status >= 409){
+        alert("An error occurred. Please try again.");
+    }
     console.error("API Error:", error);
-    alert("An error occurred. Please try again.");
     return Promise.reject(error);
   }
 );

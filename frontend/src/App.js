@@ -22,19 +22,14 @@ function App() {
       };
       navigate(loginPath);
     }
-  }, [navigate, location]);
+  }, [navigate, location.pathname, location.search]);
   return (
     <div>
       <Provider store={store}>
         <Suspense fallback={<div style={{ background: '#2c2d2e', height: '100%' }} />}>
           <Routes>
             <Route path="/" element={<HomeContainer />} />
-            <Route
-              path="/login"
-              element={
-                <LoginPage />
-              }
-            />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<SignupPage />} />
             <Route path="/logout" element={<Navigate to="/login" />} />
             <Route path="*" element={<ErrorPage />} />

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Alert, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { validate } from '../../../utilities/validationHelper';
 const LoginForm = ({ dispatch }) => {
   const [form] = Form.useForm();
   const [errors, setErrors] = useState({});
+  const [apiErrors, setApiErrors] = useState();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -38,7 +39,7 @@ const LoginForm = ({ dispatch }) => {
 
     const email = formData.email;
     const password = formData.password;
-    dispatch(startLogin(email, password, navigate));
+    dispatch(startLogin(email, password, setApiErrors, navigate));
   };
 
   return (
@@ -83,16 +84,35 @@ const LoginForm = ({ dispatch }) => {
           className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
         />
       </Form.Item>
+      <Row justify="center">
+        <Form.Item shouldUpdate={true}>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
+              className="w-full p-3 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+            >
+              Log in
+            </Button>
+          )}
+        </Form.Item>
+      </Row>
 
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="w-full p-3 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
-        >
-          Log in
-        </Button>
-      </Form.Item>
+      {apiErrors && (
+        <Alert
+          message="Error"
+          description={apiErrors}
+          type="error"
+          showIcon
+          closable
+          className="mb-4"
+        />
+      )}
     </Form>
   );
 };

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, Row } from 'antd';
-import React from 'react';
+import { Button, Form, Input, Row, Alert } from 'antd';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { startSignUp } from '../../../actions/auth';
@@ -8,6 +8,7 @@ import { startSignUp } from '../../../actions/auth';
 function SignupForm({ dispatch }) {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [errors, setErrors] = useState();
 
   const signUp = (values) => {
     dispatch(
@@ -17,6 +18,7 @@ function SignupForm({ dispatch }) {
         values?.password,
         values?.cpassword,
         values?.token,
+        setErrors,
         navigate
       )
     );
@@ -114,6 +116,16 @@ function SignupForm({ dispatch }) {
           )}
         </Form.Item>
       </Row>
+      {errors && (
+        <Alert
+          message="Error"
+          description={errors}
+          type="error"
+          showIcon
+          closable
+          className="mb-4"
+        />
+      )}
     </Form>
   );
 }
