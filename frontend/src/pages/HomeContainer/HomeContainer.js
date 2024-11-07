@@ -1,5 +1,4 @@
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../../actions/auth';
@@ -11,23 +10,25 @@ const HomeContainer = ({ dispatch }) => {
   const user = Auth.getUserData();
   const navigate = useNavigate();
   const location = useLocation();
+  
+  const parsedParamsObj = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    const parsedParams = {};
+    params.forEach((value, key) => {
+      parsedParams[key] = value;
+    });
+    return parsedParams;
+  }, [location.search]);
 
-  const [isPassModalOpen, setIsPassModalOpen] = useState(false);
-  const [resetPasswordToken, setResetPasswordToken] = useState(null);
-  const parsedParamsObj = queryString.parse(location.search);
+  useEffect(() => {
+    // Use parsedParamsObj or perform any side effects with it
+    console.log(parsedParamsObj);
+  }, [parsedParamsObj]);
 
   const logOut = () => {
     dispatch(startLogout(navigate));
   };
-
-  useEffect(() => {
-    const resetToken = parsedParamsObj?.resetToken;
-    if (user?.status === 'PENDING' && resetToken) {
-      setIsPassModalOpen(true);
-      setResetPasswordToken(resetToken);
-    }
-  }, [user, parsedParamsObj, isPassModalOpen, resetPasswordToken]);
-
+  
   if (user) {
     return (
       <div className="overflow-hidden">

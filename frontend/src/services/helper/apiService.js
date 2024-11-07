@@ -1,7 +1,6 @@
 import axios from 'axios';
-import keys from '../../config/keys';
+import { baseURL } from '../../config/keys';
 
-const { baseURL } = keys;
 
 const apiClient = axios.create({
   baseURL: baseURL,

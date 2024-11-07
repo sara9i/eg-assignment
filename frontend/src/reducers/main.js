@@ -2,7 +2,6 @@ import { checkIsWebView } from '../utilities/webview';
 
 const defaultState = {
   loginFailed: false,
-  resetPasswordFailed: false,
   loading: false,
   isWebView: checkIsWebView(window?.navigator?.userAgent)
 };

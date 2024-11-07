@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Button, Form, Input, Alert, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import queryString from 'query-string'; // Import query-string to parse URL params
 import { startLogin } from '../../../actions/auth';
 import { loginFormSchema } from '../../../pages/Auth/constants';
 import { validate } from '../../../utilities/validationHelper';
@@ -16,7 +15,15 @@ const LoginForm = ({ dispatch }) => {
   const location = useLocation();
 
   // Parse email from URL query parameters
-  const { email: emailFromUrl } = queryString.parse(location.search);
+  const emailFromUrl = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('email');
+  }, [location.search]);
+
+  useEffect(() => {
+    // Use emailFromUrl or perform any side effects with it
+    console.log(emailFromUrl);
+  }, [emailFromUrl]);
 
   useEffect(() => {
     // Set the initial value for email field if email param is found
